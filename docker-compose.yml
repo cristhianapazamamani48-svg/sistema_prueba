@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # 1. El contenedor de nuestra aplicación Node.js
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      # Estas variables sobreescriben lo que haya en tu .env local
+      - DB_HOST=db  # ¡El host ahora es el nombre del servicio 'db'!
+      - DB_USER=root
+      - DB_PASSWORD=superclave123
+      - DB_NAME=task_manager_db
+    depends_on:
+      db:
+        condition: service_healthy # Espera a que la base de datos esté lista
+    restart: unless-stopped
+
+  # 2. El contenedor de la base de datos MySQL
+  db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306" # Mapeamos a 3307 afuera por si tu XAMPP local usa el 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=superclave123
+      - MYSQL_DATABASE=task_manager_db
+    volumes:
+      # Guarda los datos permanentemente aunque borres el contenedor
+      - mysql_data:/var/lib/mysql
+      # Magia: Inyecta database.sql para crear la tabla automáticamente al arrancar
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
