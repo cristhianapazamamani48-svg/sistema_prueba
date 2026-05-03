@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Gestor de Tareas Moderno</title>
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Iconos Remix -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Estilos Propios -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Fondo animado (Efecto Glassmorphism) -->
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Contenedor Principal -->
+    <main class="app-container">
+        <header class="app-header">
+            <h1>Task<span>Flow</span></h1>
+            <p>Organiza tu día de forma nativa.</p>
+        </header>
+
+        <!-- Formulario (Frontend a Backend) -->
+        <section class="task-input-section glass-panel">
+            <form id="task-form">
+                <div class="input-group">
+                    <input type="text" id="task-title" placeholder="¿Qué necesitas hacer hoy?" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <textarea id="task-desc" placeholder="Añade detalles o descripción (opcional)" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="ri-add-line"></i> Crear Tarea
+                </button>
+            </form>
+        </section>
+
+        <!-- Lista de Tareas -->
+        <section class="tasks-section">
+            <div class="tasks-header">
+                <h2>Tus Tareas</h2>
+                <div class="stats" id="task-stats">0 completadas de 0</div>
+            </div>
+            
+            <div id="loading-state" class="state-message">
+                <i class="ri-loader-4-line spin"></i> Cargando servidor local...
+            </div>
+            
+            <div id="empty-state" class="state-message hidden">
+                <div class="empty-icon">
+                    <i class="ri-checkbox-multiple-blank-line"></i>
+                </div>
+                <h3>No hay tareas</h3>
+                <p>Estás al día. ¡Añade una nueva tarea arriba!</p>
+            </div>
+
+            <!-- Aquí se inyectan las tareas desde la DB vía JS -->
+            <ul id="task-list" class="task-list"></ul>
+        </section>
+    </main>
+
+    <!-- Lógica JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
